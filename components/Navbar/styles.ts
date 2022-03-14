@@ -17,9 +17,10 @@ export default makeStyles((theme: Theme) => ({
     alignItems: "center",
     display: "flex",
     textDecoration: "none",
+    marginLeft: "10px",
   },
   image: {
-    marginRight: "10px",
+    marginRight: "10",
   },
   grow: {
     flexGrow: 1,
