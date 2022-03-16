@@ -25,13 +25,18 @@ const Product: FC<Props> = ({ product, onAddToCart }) => {
     <Card className={classes.root}>
       <CardMedia
         className={classes.media}
-        image={product.media.source}
+        // image={product.image.url}
         title={product.name}
       />
       <CardContent>
         <div className={classes.cardContent}>
+          <img
+            src={product.media.source}
+            alt="an image"
+            style={{ width: 20, height: 20 }}
+          />
           <Typography variant="h5" gutterBottom>
-            {product.name}
+            {product.name}s
           </Typography>
           <Typography variant="h5">
             {product.price.formatted_with_symbol}
