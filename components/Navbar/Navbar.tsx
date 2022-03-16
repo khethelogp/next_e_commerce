@@ -5,8 +5,13 @@ import { useRouter } from "next/router";
 import useStyles from "./styles";
 import logo from "../../public/favicon.png";
 import Link from "next/link";
+import { FC } from "react";
 
-const Navbar = () => {
+type Props = {
+  totalItems?: number;
+};
+
+const Navbar: FC<Props> = ({ totalItems }) => {
   const location = useRouter();
   const classes = useStyles();
 
@@ -40,7 +45,7 @@ const Navbar = () => {
                 aria-label="Show cart items"
                 color="inherit"
               >
-                <Badge badgeContent="2" color="secondary">
+                <Badge badgeContent={totalItems} color="secondary">
                   <ShoppingCart />
                 </Badge>
               </IconButton>

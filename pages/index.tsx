@@ -1,8 +1,29 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
+import { commerce } from "../lib/commerce";
+import { IProduct } from "../models/Product";
+import { Products } from "../components";
 
-const Home: NextPage = () => {
+export async function getStaticProps() {
+  const { data: products } = await commerce.products.list();
+
+  return {
+    props: {
+      products,
+    },
+  };
+}
+
+type Props = {
+  products: IProduct[];
+};
+
+const onAddToCart = () => {
+  console.log("hello");
+};
+
+const Home: NextPage<Props> = ({ products }) => {
   return (
     <div className={styles.container}>
       <Head>
@@ -13,6 +34,9 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1>Hello World</h1>
+        <div>
+          <Products products={products} />
+        </div>
       </main>
     </div>
   );
