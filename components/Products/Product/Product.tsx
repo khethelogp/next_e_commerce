@@ -13,30 +13,22 @@ import { IProduct } from "../../../models/Product";
 
 type Props = {
   product: IProduct;
-  onAddToCart?: Function;
 };
 
-const Product: FC<Props> = ({ product, onAddToCart }) => {
+const Product: FC<Props> = ({ product }) => {
   const classes = useStyles();
-
-  console.log(product);
 
   return (
     <Card className={classes.root}>
       <CardMedia
         className={classes.media}
-        // image={product.image.url}
+        image={product.media.source}
         title={product.name}
       />
       <CardContent>
         <div className={classes.cardContent}>
-          <img
-            src={product.media.source}
-            alt="an image"
-            style={{ width: 20, height: 20 }}
-          />
           <Typography variant="h5" gutterBottom>
-            {product.name}s
+            {product.name}
           </Typography>
           <Typography variant="h5">
             {product.price.formatted_with_symbol}

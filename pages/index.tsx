@@ -7,10 +7,12 @@ import { Products } from "../components";
 
 export async function getStaticProps() {
   const { data: products } = await commerce.products.list();
+  const { data: cart } = await commerce.cart.retrieve();
 
   return {
     props: {
       products,
+      cart,
     },
   };
 }
@@ -35,7 +37,7 @@ const Home: NextPage<Props> = ({ products }) => {
       <main className={styles.main}>
         <h1>Hello World</h1>
         <div>
-          <Products products={products} />
+          <Products />
         </div>
       </main>
     </div>
