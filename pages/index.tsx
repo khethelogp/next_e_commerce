@@ -1,28 +1,22 @@
-import type { NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
-import styles from "../styles/Home.module.css";
-import { commerce } from "../lib/commerce";
-import { IProduct } from "../models/Product";
 import { Products } from "../components";
+import commerce from "../lib/commerce";
+import styles from "../styles/Home.module.css";
+import { IProduct, GetProductsData } from "../types/types";
 
-export async function getStaticProps() {
-  const { data: products } = await commerce.products.list();
-  const { data: cart } = await commerce.cart.retrieve();
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { data: products }: GetProductsData = await commerce.products.list();
 
   return {
     props: {
       products,
-      cart,
     },
   };
-}
-
-type Props = {
-  products: IProduct[];
 };
 
-const onAddToCart = () => {
-  console.log("hello");
+type Props = {
+  products?: IProduct[];
 };
 
 const Home: NextPage<Props> = ({ products }) => {
@@ -34,10 +28,17 @@ const Home: NextPage<Props> = ({ products }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      {products?.map((product) => {
+        return (
+          <li key={product.id}>
+            {product.name} {product.price.formatted_with_symbol}{" "}
+          </li>
+        );
+      })}
+
       <main className={styles.main}>
-        <h1>Hello World</h1>
         <div>
-          <Products />
+          <Products products={products} />
         </div>
       </main>
     </div>

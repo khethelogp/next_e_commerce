@@ -1,18 +1,21 @@
 import React, { FC, useContext, useEffect, useState } from "react";
-import { commerce } from "../lib/commerce";
-import { IProduct } from "../models/Product";
+import commerce from "../lib/commerce";
+import { IProduct, Product } from "../types/types";
 import { ICart } from "../models/Cart";
 
 interface CommerceInterface {
-  cart: ICart[];
-  products: IProduct[];
+  cart?: ICart[];
+  products?: IProduct[];
 }
 
 interface Props {
+  products?: IProduct[];
   children: any;
 }
 
-const CommerceContext = React.createContext<CommerceInterface | null>(null);
+export const CommerceContext = React.createContext<CommerceInterface | null>(
+  null
+);
 
 export const useCommerce = () => {
   return useContext(CommerceContext);
@@ -38,9 +41,9 @@ const CommerceProvider: FC<Props> = ({ children }) => {
   }, []);
 
   // a value to return from useCommerce()
-  const value = {
-    products,
-    cart,
+  const value: CommerceInterface = {
+    products: products,
+    cart: cart,
   };
 
   return (
