@@ -1,8 +1,25 @@
-import type { NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
+import { Products } from "../components";
+import commerce from "../lib/commerce";
 import styles from "../styles/Home.module.css";
+import { IProduct, GetProductsData } from "../types/types";
 
-const Home: NextPage = () => {
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { data: products }: GetProductsData = await commerce.products.list();
+
+  return {
+    props: {
+      products,
+    },
+  };
+};
+
+type Props = {
+  products?: IProduct[];
+};
+
+const Home: NextPage<Props> = ({ products }) => {
   return (
     <div className={styles.container}>
       <Head>
@@ -11,8 +28,18 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      {products?.map((product) => {
+        return (
+          <li key={product.id}>
+            {product.name} {product.price.formatted_with_symbol}{" "}
+          </li>
+        );
+      })}
+
       <main className={styles.main}>
-        <h1>Hello World</h1>
+        <div>
+          <Products products={products} />
+        </div>
       </main>
     </div>
   );
