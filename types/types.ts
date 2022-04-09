@@ -1,3 +1,8 @@
+export interface GetCommerce {
+  cart?: Cart[];
+  products?: IProduct[];
+}
+
 export interface GetProductsData {
   data: IProduct[];
   meta: Meta;
@@ -113,4 +118,48 @@ export interface IProduct {
   };
   related_products: [];
   attributes: [];
+}
+
+export interface Cart {
+  id: string;
+  created: number;
+  updated: number;
+  expires: number;
+  total_items: number;
+  total_unique_items: number;
+  subtotal: Subtotal;
+  hosted_checkout_url: string;
+  line_items: LineItem[];
+  currency: Currency;
+  discount: any[];
+  meta: null;
+}
+
+export interface Currency {
+  code: string;
+  symbol: string;
+}
+
+export interface LineItem {
+  id: string;
+  product_id: string;
+  name: string;
+  product_name: string;
+  sku: null;
+  permalink: string;
+  quantity: number;
+  price: Subtotal;
+  line_total: Subtotal;
+  is_valid: boolean;
+  product_meta: any[];
+  selected_options: any[];
+  variant: null;
+  image: null;
+}
+
+export interface Subtotal {
+  raw: number;
+  formatted: string;
+  formatted_with_symbol: string;
+  formatted_with_code: string;
 }

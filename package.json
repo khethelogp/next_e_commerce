@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@chec/commerce.js": "^2.8.0",
+    "@emotion/cache": "^11.7.1",
     "@emotion/react": "^11.8.2",
+    "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.5.0",
     "@mui/material": "^5.5.0",

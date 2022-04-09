@@ -1,16 +1,11 @@
+import { GetStaticProps } from "next";
 import React, { FC, useContext, useEffect, useState } from "react";
 import commerce from "../lib/commerce";
-import { IProduct, Product } from "../types/types";
-import { ICart } from "../models/Cart";
+import { Cart, GetProductsData, IProduct } from "../types/types";
 
 interface CommerceInterface {
-  cart?: ICart[];
+  cart?: Cart[];
   products?: IProduct[];
-}
-
-interface Props {
-  products?: IProduct[];
-  children: any;
 }
 
 export const CommerceContext = React.createContext<CommerceInterface | null>(
@@ -21,12 +16,17 @@ export const useCommerce = () => {
   return useContext(CommerceContext);
 };
 
+interface Props {
+  products?: IProduct[];
+  children: any;
+}
+
 const CommerceProvider: FC<Props> = ({ children }) => {
-  const [products, setProducts] = useState<IProduct[]>([]);
-  const [cart, setCart] = useState<ICart[]>([]);
+  const [products, setProducts] = useState([]);
+  const [cart, setCart] = useState([]);
 
   const getProducts = async () => {
-    const data = await commerce.products.list();
+    const { data } = await commerce.products.list();
     setProducts(data);
   };
 
@@ -39,6 +39,10 @@ const CommerceProvider: FC<Props> = ({ children }) => {
     getProducts();
     getCart();
   }, []);
+
+  console.log(products);
+  console.log("###############");
+  // console.log(cart);
 
   // a value to return from useCommerce()
   const value: CommerceInterface = {

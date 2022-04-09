@@ -1,25 +1,15 @@
 import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import { Products } from "../components";
-import commerce from "../lib/commerce";
 import styles from "../styles/Home.module.css";
 import { IProduct, GetProductsData } from "../types/types";
-
-export const getStaticProps: GetStaticProps = async (context) => {
-  const { data: products }: GetProductsData = await commerce.products.list();
-
-  return {
-    props: {
-      products,
-    },
-  };
-};
+import fetchShopData from "./api/shop";
 
 type Props = {
   products?: IProduct[];
 };
 
-const Home: NextPage<Props> = ({ products }) => {
+const Home: NextPage<Props> = ({}) => {
   return (
     <div className={styles.container}>
       <Head>
@@ -28,17 +18,9 @@ const Home: NextPage<Props> = ({ products }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {products?.map((product) => {
-        return (
-          <li key={product.id}>
-            {product.name} {product.price.formatted_with_symbol}{" "}
-          </li>
-        );
-      })}
-
       <main className={styles.main}>
         <div>
-          <Products products={products} />
+          <Products />
         </div>
       </main>
     </div>
@@ -46,3 +28,13 @@ const Home: NextPage<Props> = ({ products }) => {
 };
 
 export default Home;
+
+/* export const getStaticProps: GetStaticProps = async (context) => {
+  const { data: products }: GetProductsData = await commerce.products.list();
+
+  return {
+    props: {
+      products,
+    },
+  };
+}; */

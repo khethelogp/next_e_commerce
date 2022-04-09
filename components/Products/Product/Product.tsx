@@ -8,25 +8,29 @@ import {
   IconButton,
 } from "@mui/material";
 import { AddShoppingCart } from "@mui/icons-material";
-import useStyles from "./styles";
-import { IProduct } from "../../../models/Product";
+import { IProduct } from "../../../types/types";
 
 type Props = {
   product: IProduct;
 };
 
 const Product: FC<Props> = ({ product }) => {
-  const classes = useStyles();
-
   return (
-    <Card className={classes.root}>
+    <Card
+      sx={{
+        maxWidth: "100%",
+      }}
+    >
       <CardMedia
-        className={classes.media}
         image={product.media.source}
         title={product.name}
+        sx={{
+          height: 0,
+          paddingTop: "56.25%", //16:9
+        }}
       />
       <CardContent>
-        <div className={classes.cardContent}>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
           <Typography variant="h5" gutterBottom>
             {product.name}
           </Typography>
@@ -40,7 +44,13 @@ const Product: FC<Props> = ({ product }) => {
           color="textSecondary"
         />
       </CardContent>
-      <CardActions disableSpacing className={classes.cardActions}>
+      <CardActions
+        disableSpacing
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+        }}
+      >
         <IconButton
           aria-label="Add to card"
           onClick={() => {

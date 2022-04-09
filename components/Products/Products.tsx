@@ -1,19 +1,18 @@
 import React, { useContext } from "react";
 import { Grid } from "@mui/material";
 import Product from "./Product/Product";
-import useStyles from "./styles";
-import { IProduct } from "../../types/types";
+import { useCommerce } from "../../context/CommerceContext";
 
-type Props = {
-  products?: IProduct[];
-};
+// type Props = {
+//   children:any;
+// };
 
-const Products = ({ products }: Props) => {
-  const classes = useStyles();
+const Products = ({}) => {
+  const { products } = useCommerce();
 
   return (
-    <main className={classes.content}>
-      <div className={classes.toolbar} />
+    <main style={{ flexGrow: "1" }}>
+      <div />
       <Grid container justifyContent="center" spacing={4}>
         {products?.map((product) => (
           <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>

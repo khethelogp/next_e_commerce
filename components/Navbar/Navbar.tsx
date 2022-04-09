@@ -2,10 +2,10 @@ import { AppBar, Badge, IconButton, Toolbar, Typography } from "@mui/material";
 import { ShoppingCart } from "@mui/icons-material";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import useStyles from "./styles";
 import logo from "../../public/favicon.png";
-import Link from "next/link";
 import { FC } from "react";
+import Link from "../../src/Link";
+import theme from "../../src/theme";
 
 type Props = {
   totalItems?: number;
@@ -13,31 +13,44 @@ type Props = {
 
 const Navbar: FC<Props> = ({ totalItems }) => {
   const location = useRouter();
-  const classes = useStyles();
+
+  const drawerWidth = 0;
 
   return (
     <>
-      <AppBar position="fixed" className={classes.appBar} color="inherit">
+      <AppBar
+        position="fixed"
+        color="inherit"
+        sx={{
+          boxShadow: "none",
+          borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
+          [theme.breakpoints?.up("sm")]: {
+            width: `calc(100% - ${drawerWidth}px)`,
+            marginLeft: drawerWidth,
+          },
+        }}
+      >
         <Toolbar>
-          <Image
-            src={logo}
-            alt="commerce.js"
-            height={25}
-            width={25}
-            className={classes.image}
-          />
+          <Image src={logo} alt="commerce.js" height={25} width={25} />
+
           <Link href="/">
-            <a>
-              <Typography
-                variant="h6"
-                className={classes.title}
-                color="inherit"
-              >
-                E-Store
-              </Typography>
-            </a>
+            <Typography
+              variant="h6"
+              // color="inherit"
+              sx={{
+                flexGrow: 1,
+                alignItems: "center",
+                display: "flex",
+                textDecoration: "none",
+                marginLeft: "20px",
+              }}
+            >
+              E-Store
+            </Typography>
           </Link>
-          <div className={classes.grow} />
+
+          <div style={{ flexGrow: "1" }} />
+
           {location.pathname === "/" && (
             <div>
               <IconButton
