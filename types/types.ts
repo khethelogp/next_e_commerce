@@ -154,7 +154,7 @@ export interface LineItem {
   product_meta: any[];
   selected_options: any[];
   variant: null;
-  image: null;
+  image: string;
 }
 
 export interface Subtotal {

@@ -1,21 +1,9 @@
 import React, { FC } from "react";
-import commerce from "../../lib/commerce";
 import { Cart, IProduct } from "../../types/types";
 import useStyles from "./styles";
 import { Typography, Grid, Button, Container } from "@mui/material";
 import Link from "next/link";
-
-export async function getStaticProps() {
-  const { data: cart } = await commerce.cart.retrieve();
-
-  console.log(cart);
-
-  return {
-    props: {
-      cart,
-    },
-  };
-}
+import theme from "../../src/theme";
 
 type Props = {
   cart: Cart;
@@ -92,11 +80,12 @@ const Cart = ({ cart }: Props) => {
 
 export default Cart;
 
-/* import React from "react";
+/* export async function getStaticProps() {
+  const { cart } = await commerce.cart.retrieve();
 
-const Cart = () => {
-  return <div>Cart</div>;
-};
-
-export default Cart;
- */
+  return {
+    props: {
+      cart,
+    },
+  };
+} */

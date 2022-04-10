@@ -40,9 +40,8 @@ const CommerceProvider: FC<Props> = ({ children }) => {
     getCart();
   }, []);
 
-  console.log(products);
+  console.log(cart);
   console.log("###############");
-  // console.log(cart);
 
   // a value to return from useCommerce()
   const value: CommerceInterface = {
