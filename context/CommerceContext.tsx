@@ -4,7 +4,7 @@ import commerce from "../lib/commerce";
 import { Cart, GetProductsData, IProduct } from "../types/types";
 
 interface CommerceInterface {
-  cart?: Cart[];
+  cart?: Cart;
   products?: IProduct[];
 }
 
@@ -23,7 +23,9 @@ interface Props {
 
 const CommerceProvider: FC<Props> = ({ children }) => {
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState({} as Cart);
+  const [order, setOrder] = useState({});
+  const [errorMessage, setErrorMessage] = useState("");
 
   const getProducts = async () => {
     const { data } = await commerce.products.list();
@@ -35,6 +37,50 @@ const CommerceProvider: FC<Props> = ({ children }) => {
     setCart(data);
   };
 
+  const handleAddToCart = async (productId, quantity) => {
+    const item = await commerce.cart.add(productId, quantity);
+    setCart(item.cart);
+  };
+
+  const handleUpdateCartQty = async (lineItemId, quantity) => {
+    const response = await commerce.cart.update(lineItemId, { quantity });
+
+    setCart(response.cart);
+  };
+
+  const handleRemoveFromCart = async (lineItemId) => {
+    const response = await commerce.cart.remove(lineItemId);
+
+    setCart(response.cart);
+  };
+
+  const handleEmptyCart = async () => {
+    const response = await commerce.cart.empty();
+
+    setCart(response.cart);
+  };
+
+  const refreshCart = async () => {
+    const newCart = await commerce.cart.refresh();
+
+    setCart(newCart);
+  };
+
+  const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {
+    try {
+      const incomingOrder = await commerce.checkout.capture(
+        checkoutTokenId,
+        newOrder
+      );
+
+      setOrder(incomingOrder);
+
+      refreshCart();
+    } catch (error: any) {
+      setErrorMessage(error?.data.error.message);
+    }
+  };
+
   useEffect(() => {
     getProducts();
     getCart();
@@ -44,9 +90,10 @@ const CommerceProvider: FC<Props> = ({ children }) => {
   console.log("###############");
 
   // a value to return from useCommerce()
-  const value: CommerceInterface = {
+  const value = {
     products: products,
     cart: cart,
+    handleAddToCart,
   };
 
   return (
