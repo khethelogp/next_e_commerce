@@ -154,7 +154,12 @@ export interface LineItem {
   product_meta: any[];
   selected_options: any[];
   variant: null;
-  image: null;
+  image: string;
+  media: {
+    type: string;
+    source: string;
+    asset_id: string;
+  };
 }
 
 export interface Subtotal {

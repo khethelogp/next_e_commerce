@@ -9,12 +9,15 @@ import {
 } from "@mui/material";
 import { AddShoppingCart } from "@mui/icons-material";
 import { IProduct } from "../../../types/types";
+import { useCommerce } from "../../../context/CommerceContext";
 
 type Props = {
   product: IProduct;
 };
 
 const Product: FC<Props> = ({ product }) => {
+  const { handleAddToCart } = useCommerce();
+
   return (
     <Card
       sx={{
@@ -53,10 +56,7 @@ const Product: FC<Props> = ({ product }) => {
       >
         <IconButton
           aria-label="Add to card"
-          onClick={() => {
-            console.log("hey");
-          }}
-          // onClick={() => onAddToCart(product.id, 1)}
+          onClick={() => handleAddToCart(product.id, 1)}
         >
           <AddShoppingCart />
         </IconButton>
