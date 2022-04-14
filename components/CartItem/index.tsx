@@ -8,25 +8,21 @@ import {
 } from "@mui/material";
 import CardMedia from "@mui/material/CardMedia";
 import { LineItem } from "../../types/types";
+import { useCommerce } from "../../context/CommerceContext";
 
 type Props = {
   item: LineItem;
-  onUpdateCartQty: Function;
-  onRemoveFromCart: Function;
 };
 
-const CartItem: FC<Props> = ({ item, onUpdateCartQty, onRemoveFromCart }) => {
-  const handleUpdateCartQty = (lineItemId, newQuantity) =>
-    onUpdateCartQty(lineItemId, newQuantity);
-
-  const handleRemoveFromCart = (lineItemId) => onRemoveFromCart(lineItemId);
+const CartItem: FC<Props> = ({ item }) => {
+  const { handleUpdateCartQty, handleRemoveFromCart } = useCommerce();
 
   return (
     <Card className="cart-item">
       <CardMedia
         component="img"
-        image={item.image}
-        alt={item.image}
+        image={item.media.source}
+        alt={item.name}
         sx={{ height: 260 }}
       />
       <CardContent
@@ -67,7 +63,9 @@ const CartItem: FC<Props> = ({ item, onUpdateCartQty, onRemoveFromCart }) => {
           variant="contained"
           type="button"
           color="secondary"
-          onClick={() => handleRemoveFromCart(item.id)}
+          onClick={() => {
+            handleRemoveFromCart(item.id);
+          }}
         >
           Remove
         </Button>

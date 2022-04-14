@@ -155,6 +155,11 @@ export interface LineItem {
   selected_options: any[];
   variant: null;
   image: string;
+  media: {
+    type: string;
+    source: string;
+    asset_id: string;
+  };
 }
 
 export interface Subtotal {

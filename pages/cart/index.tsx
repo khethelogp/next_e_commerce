@@ -11,31 +11,28 @@ import { useCommerce } from "../../context/CommerceContext";
 // };
 
 const Cart = ({}) => {
-  const { cart } = useCommerce();
+  const { cart, handleEmptyCart } = useCommerce();
 
   const EmptyCart = () => (
     <Typography variant="subtitle1">
       You have no items in your shopping cart
-      <Link href="/">
-        {/* <a style={{ textDecoration: "none" }}> start adding some items!</a> */}
+      {/* <Link href="/">
         <a> start adding some items!</a>
-      </Link>
+      </Link> */}
+      <Button sx={{ textTransform: "Capitalize" }}>
+        <Link href="/">Start adding some items!</Link>
+      </Button>
     </Typography>
   );
 
-  const handleUpdateCartQty = () => {};
-  const handleRemoveFromCartQty = () => {};
+  const onEmptyCart = () => handleEmptyCart();
 
   const FilledCart = () => (
     <>
       <Grid container spacing={3}>
         {cart?.line_items.map((item) => (
           <Grid item xs={12} sm={4} key={item.id}>
-            <CartItem
-              item={item}
-              onUpdateCartQty={handleUpdateCartQty}
-              onRemoveFromCart={handleRemoveFromCartQty}
-            />
+            <CartItem item={item} />
           </Grid>
         ))}
       </Grid>
@@ -66,7 +63,7 @@ const Cart = ({}) => {
                 marginRight: "20px",
               },
             }}
-            // onClick={handleEmptyCart}
+            onClick={onEmptyCart}
           >
             Empty Cart
           </Button>
@@ -79,7 +76,7 @@ const Cart = ({}) => {
               minWidth: "150px",
             }}
           >
-            <Link href="checkout">Checkout</Link>
+            <Link href="/checkout">Checkout</Link>
           </Button>
         </div>
       </div>

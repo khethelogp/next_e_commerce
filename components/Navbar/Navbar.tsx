@@ -4,16 +4,17 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import logo from "../../public/favicon.png";
 import { FC } from "react";
-import Link from "../../src/Link";
 import theme from "../../src/theme";
+import { useCommerce } from "../../context/CommerceContext";
+import Link from "next/link";
 
 type Props = {
   totalItems?: number;
 };
 
-const Navbar: FC<Props> = ({ totalItems }) => {
+const Navbar: FC<Props> = () => {
+  const { totalCartItems } = useCommerce();
   const location = useRouter();
-
   const drawerWidth = 0;
 
   return (
@@ -36,7 +37,6 @@ const Navbar: FC<Props> = ({ totalItems }) => {
           <Link href="/">
             <Typography
               variant="h6"
-              // color="inherit"
               sx={{
                 flexGrow: 1,
                 alignItems: "center",
@@ -53,14 +53,15 @@ const Navbar: FC<Props> = ({ totalItems }) => {
 
           {location.pathname === "/" && (
             <div>
-              <IconButton
-                href="/cart"
-                aria-label="Show cart items"
-                color="inherit"
-              >
-                <Badge badgeContent={totalItems} color="secondary">
-                  <ShoppingCart />
-                </Badge>
+              <IconButton aria-label="Show cart items" color="inherit">
+                <Link href="/cart">
+                  <Badge
+                    badgeContent={totalCartItems?.toString()}
+                    color="secondary"
+                  >
+                    <ShoppingCart />
+                  </Badge>
+                </Link>
               </IconButton>
             </div>
           )}

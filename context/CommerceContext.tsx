@@ -6,6 +6,11 @@ import { Cart, GetProductsData, IProduct } from "../types/types";
 interface CommerceInterface {
   cart?: Cart;
   products?: IProduct[];
+  totalCartItems?: Number;
+  handleAddToCart?: Function;
+  handleUpdateCartQty?: Function;
+  handleRemoveFromCart?: Function;
+  handleEmptyCart?: Function;
 }
 
 export const CommerceContext = React.createContext<CommerceInterface | null>(
@@ -24,6 +29,7 @@ interface Props {
 const CommerceProvider: FC<Props> = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState({} as Cart);
+  const [totalCartItems, setTotalCartItems] = useState(0);
   const [order, setOrder] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -33,22 +39,21 @@ const CommerceProvider: FC<Props> = ({ children }) => {
   };
 
   const getCart = async () => {
-    const data = await commerce.cart.retrieve();
-    setCart(data);
+    setCart(await commerce.cart.retrieve());
   };
 
-  const handleAddToCart = async (productId, quantity) => {
+  const handleAddToCart = async (productId: string, quantity: number) => {
     const item = await commerce.cart.add(productId, quantity);
     setCart(item.cart);
   };
 
-  const handleUpdateCartQty = async (lineItemId, quantity) => {
+  const handleUpdateCartQty = async (lineItemId: string, quantity: number) => {
     const response = await commerce.cart.update(lineItemId, { quantity });
 
     setCart(response.cart);
   };
 
-  const handleRemoveFromCart = async (lineItemId) => {
+  const handleRemoveFromCart = async (lineItemId: string) => {
     const response = await commerce.cart.remove(lineItemId);
 
     setCart(response.cart);
@@ -86,6 +91,10 @@ const CommerceProvider: FC<Props> = ({ children }) => {
     getCart();
   }, []);
 
+  useEffect(() => {
+    setTotalCartItems(cart.total_items);
+  }, [cart]);
+
   console.log(cart);
   console.log("###############");
 
@@ -93,7 +102,12 @@ const CommerceProvider: FC<Props> = ({ children }) => {
   const value = {
     products: products,
     cart: cart,
+    totalCartItems,
     handleAddToCart,
+    handleUpdateCartQty,
+    handleRemoveFromCart,
+    handleEmptyCart,
+    handleCaptureCheckout,
   };
 
   return (
