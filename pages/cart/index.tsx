@@ -16,9 +16,6 @@ const Cart = ({}) => {
   const EmptyCart = () => (
     <Typography variant="subtitle1">
       You have no items in your shopping cart
-      {/* <Link href="/">
-        <a> start adding some items!</a>
-      </Link> */}
       <Button sx={{ textTransform: "Capitalize" }}>
         <Link href="/">Start adding some items!</Link>
       </Button>

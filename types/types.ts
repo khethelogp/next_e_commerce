@@ -168,3 +168,62 @@ export interface Subtotal {
   formatted_with_symbol: string;
   formatted_with_code: string;
 }
+
+export interface Order {
+  line_items: LineItem[];
+  subtotal: OrderValue;
+  discount: any[];
+  shipping: OrderShipping;
+  tax: OrderTax;
+  total: OrderValue;
+  total_with_tax: OrderValue;
+  pay_what_you_want: PayWhatYouWant;
+  customer: Customer;
+  customer_reference: string;
+}
+
+export interface OrderValue {
+  raw: number;
+  formatted: string;
+  formatted_with_symbol: string;
+  formatted_with_code: string;
+}
+
+export interface OrderShipping {
+  id: string;
+  description: string;
+  price: OrderValue;
+}
+
+export interface OrderTax {
+  amount: OrderValue;
+  included_in_price: boolean;
+  breakdown: Breakdown[];
+  zone: Zone;
+}
+
+export interface Breakdown {
+  amount: OrderValue;
+  rate: number;
+  rate_percentage: string;
+  type: string;
+}
+
+export interface PayWhatYouWant {
+  enabled: boolean;
+  minimum: OrderValue;
+  customer_set_price: OrderValue;
+}
+
+export interface Zone {
+  country: string;
+  region: string;
+  postal_zip_code: string;
+  ip_address: string;
+}
+
+export interface Customer {
+  email: string;
+  firstname: string;
+  lastname: string;
+}
