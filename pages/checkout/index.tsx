@@ -31,23 +31,22 @@ const Checkout = ({}) => {
   const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
   const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
 
-  if (cart.id) {
-    var generateToken = async () => {
-      try {
-        const token = await commerce.checkout.generateToken(cart.id, {
-          type: "cart",
-        });
-
-        setCheckoutToken(token);
-      } catch {
-        if (activeStep !== steps.length) history.push("/");
-      }
-    };
-  }
-
   useEffect(() => {
-    generateToken();
-  }, [cart, generateToken]);
+    if (cart.id) {
+      const generateToken = async () => {
+        try {
+          const token = await commerce.checkout.generateToken(cart.id, {
+            type: "cart",
+          });
+
+          setCheckoutToken(token);
+        } catch {
+          if (activeStep !== steps.length) history.push("/");
+        }
+      };
+      generateToken();
+    }
+  }, [cart]);
 
   const test = (data) => {
     setShippingData(data);
