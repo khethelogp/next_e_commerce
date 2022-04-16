@@ -35,18 +35,20 @@ const Navbar: FC<Props> = () => {
           <Image src={logo} alt="commerce.js" height={25} width={25} />
 
           <Link href="/" passHref>
-            <Typography
-              variant="h6"
-              sx={{
-                flexGrow: 1,
-                alignItems: "center",
-                display: "flex",
-                textDecoration: "none",
-                marginLeft: "20px",
-              }}
-            >
-              E-Store
-            </Typography>
+            <a style={{ textDecoration: "none" }}>
+              <Typography
+                variant="h6"
+                sx={{
+                  flexGrow: 1,
+                  alignItems: "center",
+                  display: "flex",
+                  textDecoration: "none",
+                  marginLeft: "20px",
+                }}
+              >
+                E-Store
+              </Typography>
+            </a>
           </Link>
 
           <div style={{ flexGrow: "1" }} />
