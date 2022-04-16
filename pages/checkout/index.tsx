@@ -47,7 +47,7 @@ const Checkout = ({}) => {
 
   useEffect(() => {
     generateToken();
-  }, [cart]);
+  }, [cart, generateToken]);
 
   const test = (data) => {
     setShippingData(data);

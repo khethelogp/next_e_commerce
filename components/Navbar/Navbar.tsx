@@ -34,7 +34,7 @@ const Navbar: FC<Props> = () => {
         <Toolbar>
           <Image src={logo} alt="commerce.js" height={25} width={25} />
 
-          <Link href="/">
+          <Link href="/" passHref>
             <Typography
               variant="h6"
               sx={{
