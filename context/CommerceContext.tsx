@@ -1,16 +1,19 @@
 import { GetStaticProps } from "next";
 import React, { FC, useContext, useEffect, useState } from "react";
 import commerce from "../lib/commerce";
-import { Cart, GetProductsData, IProduct } from "../types/types";
+import { Cart, IProduct, Order } from "../types/types";
 
 interface CommerceInterface {
   cart?: Cart;
+  order?: Order;
+  errorMessage?: String;
   products?: IProduct[];
   totalCartItems?: Number;
   handleAddToCart?: Function;
   handleUpdateCartQty?: Function;
   handleRemoveFromCart?: Function;
   handleEmptyCart?: Function;
+  handleCaptureCheckout?: Function;
 }
 
 export const CommerceContext = React.createContext<CommerceInterface | null>(
@@ -30,7 +33,7 @@ const CommerceProvider: FC<Props> = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState({} as Cart);
   const [totalCartItems, setTotalCartItems] = useState(0);
-  const [order, setOrder] = useState({});
+  const [order, setOrder] = useState({} as Order);
   const [errorMessage, setErrorMessage] = useState("");
 
   const getProducts = async () => {
@@ -71,7 +74,10 @@ const CommerceProvider: FC<Props> = ({ children }) => {
     setCart(newCart);
   };
 
-  const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {
+  const handleCaptureCheckout = async (
+    checkoutTokenId: string,
+    newOrder: Order
+  ) => {
     try {
       const incomingOrder = await commerce.checkout.capture(
         checkoutTokenId,
@@ -95,13 +101,15 @@ const CommerceProvider: FC<Props> = ({ children }) => {
     setTotalCartItems(cart.total_items);
   }, [cart]);
 
-  console.log(cart);
+  console.log(order);
   console.log("###############");
 
   // a value to return from useCommerce()
   const value = {
     products: products,
     cart: cart,
+    order: order,
+    errorMessage,
     totalCartItems,
     handleAddToCart,
     handleUpdateCartQty,
