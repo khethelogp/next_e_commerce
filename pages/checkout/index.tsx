@@ -46,6 +46,7 @@ const Checkout = ({}) => {
       };
       generateToken();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cart]);
 
   const test = (data) => {
@@ -89,7 +90,7 @@ const Checkout = ({}) => {
     );
 
   if (errorMessage) {
-    Confirmation = () => (
+    const Confirmation = () => (
       <>
         <Typography variant="h5">Error: {errorMessage}</Typography>
         <br />

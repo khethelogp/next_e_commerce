@@ -68,6 +68,8 @@ const AddressForm = ({ checkoutToken, test }) => {
         shippingCountry,
         shippingSubdivision
       );
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shippingSubdivision, checkoutToken.id, shippingCountry]);
 
   return (
