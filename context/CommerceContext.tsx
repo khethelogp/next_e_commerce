@@ -101,9 +101,6 @@ const CommerceProvider: FC<Props> = ({ children }) => {
     setTotalCartItems(cart.total_items);
   }, [cart]);
 
-  console.log(order);
-  console.log("###############");
-
   // a value to return from useCommerce()
   const value = {
     products: products,
