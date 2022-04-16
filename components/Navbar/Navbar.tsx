@@ -54,7 +54,7 @@ const Navbar: FC<Props> = () => {
           {location.pathname === "/" && (
             <div>
               <IconButton aria-label="Show cart items" color="inherit">
-                <Link href="/cart">
+                <Link href="/cart" passHref>
                   <Badge
                     badgeContent={totalCartItems?.toString()}
                     color="secondary"
